@@ -78,7 +78,7 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
     strarr_mkdnLinks.push(`</ul>`);
   }
 
-  let str_ans = strarr_mkdnLinks.join('  \r\n') + '  \r\n';
+  let str_ans = strarr_mkdnLinks.replace(/</g, '&lt;').replace(/>/g, '&gt;').join('\r\n');
 
   /* <モーダルの表示>--------------------------------------------------------------------------- */
 
