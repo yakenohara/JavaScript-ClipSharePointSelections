@@ -128,8 +128,7 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
     document.execCommand('copy'); 
     /* <for IE 11 only> */
     try{
-        window.clipboardData.setData('text', obj_event.innerHTML);/* todo コーディングミス*/
-    
+        window.clipboardData.setData('text', htmlElem_pre.innerHTML);
     }catch(e){
         /* nothing to do */
     }
