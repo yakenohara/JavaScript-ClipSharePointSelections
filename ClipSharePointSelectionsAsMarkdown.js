@@ -82,7 +82,15 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
   let str_ans = strarr_mkdnLinks.join('  \r\n') + '  \r\n';
 
   /* <モーダルの表示>--------------------------------------------------------------------------- */
-  str_uniqueIDForModalDiv = 'WNDhs8zhd8g80hEHG0l'; /* todo 重複する id が存在する場合は、別名を使用 */
+
+  /* 一意 id の作成 */
+  let str_uniqueIDForModalDiv = 'WNDhs8zhd8g80hEHG0l';
+  let int_dupTimes = 0;
+  let str_uniqueIDForModalDiv_PossibilityOfDuplicate = str_uniqueIDForModalDiv + '_' + String(int_dupTimes);
+  while(document.getElementById(str_uniqueIDForModalDiv_PossibilityOfDuplicate)){
+    str_uniqueIDForModalDiv_PossibilityOfDuplicate = str_uniqueIDForModalDiv + '_' + String(++int_dupTimes);
+  }
+  str_uniqueIDForModalDiv = str_uniqueIDForModalDiv_PossibilityOfDuplicate; /* 一意 id の格納 */
 
   /* モーダル用 <div> 要素の innerHTML 文字列 */
   /* todo なぜか最終行の改行が表示 & コピーされない */
@@ -91,11 +99,11 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
 `<div class="modal-overlay js-modal-close" style="user-select: text; align-items: center; background: rgba(0, 0, 0, .75); bottom: 0; display: flex; justify-content: center; left: 0; position: fixed; right: 0; top: 0;">
   <div class="modal-container" style="background: #fff; border-radius: 4px; max-height: 100%; max-width: ${document.documentElement.clientWidth * 0.8}px; padding: 30px 20px; overflow: scroll;">
     <div class="modal-content">
-      <h2 class="modal-content-ttl">Press OK to copy to clipboard <button class="modal-btn modal-close js-modal-close" type="submit">OK</button></h2>
+      <h2 class="modal-content-ttl">Press OK to copy to clipboard <button class="modal-btn modal-close js-modal-close" style="border: none; border-radius: 4px; color: #fff; cursor: pointer; font-size: 1rem; padding: 10px 20px; background: darkblue;">OK</button></h2>
       <pre class="modal-content-txt">${str_ans}</pre>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-container -->
-</div><!-- /.modal-overlay -->`; /* todo OKボタンが小さい */
+</div><!-- /.modal-overlay -->`;
 
   if (document.getElementById(str_uniqueIDForModalDiv) == null){ /* モーダル HTML 要素が存在しない場合 */
 
