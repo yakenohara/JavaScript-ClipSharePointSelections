@@ -1,5 +1,5 @@
 javascript: /*
-SharePoint上のファイルパスを取得し、Markdown 形式の `[代替文字列](Hyperlink)` の文字列を表示するブックマークレット  
+Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor text](Hyperlink)` string in Markdown format. 
 
 参考にしたページ -> `https://www.meganii.com/blog/2022/05/16/getting-document-path-in-share-point-by-bookmarklet/`
 */
@@ -73,7 +73,7 @@ SharePoint上のファイルパスを取得し、Markdown 形式の `[代替文�
     let str_mkdnLink = strarr_mkdnLinkOfSelections[int_selectIdx];
     strarr_mkdnLinks.push(`┣[${str_selectionName}](${str_mkdnLink})`);
   }
-  if (0 < strarr_selectedItemNames.length){ /* 配列要素最後までの間は、行頭を`┗`で開始する */
+  if (0 < strarr_selectedItemNames.length){ /* 配列要素最後は、行頭を`┗`で開始する */
     let str_selectionName = strarr_selectedItemNames[strarr_selectedItemNames.length - 1];
     let str_mkdnLink = strarr_mkdnLinkOfSelections[strarr_selectedItemNames.length - 1];
     strarr_mkdnLinks.push(`┗[${str_selectionName}](${str_mkdnLink})`);
@@ -82,20 +82,20 @@ SharePoint上のファイルパスを取得し、Markdown 形式の `[代替文�
   let str_ans = strarr_mkdnLinks.join('  \r\n') + '  \r\n';
 
   /* <モーダルの表示>--------------------------------------------------------------------------- */
-  str_uniqueIDForModalDiv = 'WNDhs8zhd8g80hEHG0l';
+  str_uniqueIDForModalDiv = 'WNDhs8zhd8g80hEHG0l'; /* todo 重複する id が存在する場合は、別名を使用 */
 
   /* モーダル用 <div> 要素の innerHTML 文字列 */
   /* todo なぜか最終行の改行が表示 & コピーされない */
-  /* <Button> 要素に `type="submit"` を指定しても、 `autofocus` を指定しても、、フォーカスされない */
+  /* todo <Button> 要素に `type="submit"` を指定しても、 `autofocus` を指定しても、、フォーカスされない */
   const str_innerHTML = 
 `<div class="modal-overlay js-modal-close" style="user-select: text; align-items: center; background: rgba(0, 0, 0, .75); bottom: 0; display: flex; justify-content: center; left: 0; position: fixed; right: 0; top: 0;">
   <div class="modal-container" style="background: #fff; border-radius: 4px; max-height: 100%; max-width: ${document.documentElement.clientWidth * 0.8}px; padding: 30px 20px; overflow: scroll;">
     <div class="modal-content">
-      <h2 class="modal-content-ttl">OK ボタンを押して内容をクリップボードにコピーします <button class="modal-btn modal-close js-modal-close" type="submit">OK</button></h2>
+      <h2 class="modal-content-ttl">Press OK to copy to clipboard <button class="modal-btn modal-close js-modal-close" type="submit">OK</button></h2>
       <pre class="modal-content-txt">${str_ans}</pre>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-container -->
-</div><!-- /.modal-overlay -->`;
+</div><!-- /.modal-overlay -->`; /* todo OKボタンが小さい */
 
   if (document.getElementById(str_uniqueIDForModalDiv) == null){ /* モーダル HTML 要素が存在しない場合 */
 
@@ -128,7 +128,7 @@ SharePoint上のファイルパスを取得し、Markdown 形式の `[代替文�
     document.execCommand('copy'); 
     /* <for IE 11 only> */
     try{
-        window.clipboardData.setData('text', obj_event.innerHTML);
+        window.clipboardData.setData('text', obj_event.innerHTML);/* todo コーディングミス*/
     
     }catch(e){
         /* nothing to do */

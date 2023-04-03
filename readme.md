@@ -1,16 +1,16 @@
 # What's This ?
 
-SharePoint上のファイルパスを取得し、Markdown 形式の `[代替文字列](Hyperlink)` の文字列を表示するブックマークレット  
+Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor text](Hyperlink)` string in Markdown format.   
 
 # Usage
 
 ## Install
 
-SharePointSelectionsToMarkdown.js の内容をブックマークレットとしてブラウザに登録する(名称は任意)  
+Register the contents of ClipSharePointSelectionsAsMarkdown.js in the browser as a bookmarklet (Bookmark name is arbitrary).  
 
 ## Run
 
-1. SharePoint でリンクを取得したいアイテムを選択する  
+1. Select the item(s) you want to get a link for in SharePoint  
 ![](assets/images/1.png)  
-2. ブックマークから登録した SharePointSelections.js をクリックする  
-3. モーダルに作成した文字列が表示されるので、コピーして利用する  
+2. Click the registered Bookmarklet  
+3. Since the created character string is displayed in the modal, Press OK to copy to clipboard.    
