@@ -38,7 +38,7 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
   /* デバッグ用表示 */
   /*console.log(JSON.stringify(dict_files, null, "    "));*/
 
-  let str_CurDirNameDecoded = `${str_siteName}/${str_serverRelativeUrl}`.replace('/', ' > ');
+  let str_CurDirNameDecoded = `${str_siteName}/${str_serverRelativeUrl}`.replace(/\//g, ' > ');
   let str_CurDirNameEncoded = encodeURI(`${str_baseurl}/${str_serverRelativeUrl}`);
   let strarr_mkdnLinks = [];
 
