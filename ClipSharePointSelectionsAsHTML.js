@@ -95,7 +95,7 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
   /* todo なぜか最終行の改行が表示 & コピーされない */
   /* todo <Button> 要素に `type="submit"` を指定しても、 `autofocus` を指定しても、、フォーカスされない */
   const str_innerHTML = 
-`<div class="modal-overlay js-modal-close" style="user-select: text; align-items: center; background: rgba(0, 0, 0, .75); bottom: 0; display: flex; justify-content: center; left: 0; position: fixed; right: 0; top: 0;">
+`<div class="modal-overlay js-modal-close" style="user-select: text; align-items: center; background: rgba(0, 0, 0, .75); bottom: 0; display: flex; justify-content: center; left: 0; position: fixed; right: 0; top: 0; color: #000000">
   <div class="modal-container" style="background: #fff; border-radius: 4px; max-height: 100%; max-width: ${document.documentElement.clientWidth * 0.8}px; padding: 30px 20px; overflow: scroll;">
     <div class="modal-content">
       <h2 class="modal-content-ttl">Press OK to copy to clipboard <button class="modal-btn modal-close js-modal-close" style="border: none; border-radius: 4px; color: #fff; cursor: pointer; font-size: 1rem; padding: 10px 20px; background: darkblue;">OK</button></h2>
