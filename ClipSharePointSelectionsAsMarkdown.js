@@ -96,7 +96,7 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
   /* todo なぜか最終行の改行が表示 & コピーされない */
   /* todo <Button> 要素に `type="submit"` を指定しても、 `autofocus` を指定しても、、フォーカスされない */
   const str_innerHTML = 
-  `<div class="modal-overlay js-modal-close" style="user-select: text; align-items: center; background: rgba(0, 0, 0, .75); bottom: 0; display: flex; justify-content: center; left: 0; position: fixed; right: 0; top: 0; color: #000000">
+`<div class="modal-overlay js-modal-close" style="user-select: text; align-items: center; background: rgba(0, 0, 0, .75); bottom: 0; display: flex; justify-content: center; left: 0; position: fixed; right: 0; top: 0; color: #000000">
   <div class="modal-container" style="background: #fff; border-radius: 4px; max-height: 100%; max-width: ${document.documentElement.clientWidth * 0.8}px; padding: 30px 20px; overflow: scroll;">
     <div class="modal-content">
       <h2 class="modal-content-ttl">Press OK to copy to clipboard <button class="modal-btn modal-close js-modal-close" style="border: none; border-radius: 4px; color: #fff; cursor: pointer; font-size: 1rem; padding: 10px 20px; background: darkblue;">OK</button></h2>
@@ -105,28 +105,25 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
   </div><!-- /.modal-container -->
 </div><!-- /.modal-overlay -->`;
 
-  if (document.getElementById(str_uniqueIDForModalDiv) == null){ /* モーダル HTML 要素が存在しない場合 */
+  let HtmlElem_modalDiv = document.createElement('div');
+  HtmlElem_modalDiv.setAttribute('id', str_uniqueIDForModalDiv);
+  HtmlElem_modalDiv.style.opacity = 0;
+  document.body.appendChild(HtmlElem_modalDiv); /* モーダル用 <div> 要素を追加 */
 
-    let HtmlElem_modalDiv = document.createElement('div');
-    HtmlElem_modalDiv.setAttribute('id', str_uniqueIDForModalDiv);
-    document.body.appendChild(HtmlElem_modalDiv); /* モーダル用 <div> 要素を追加 */
-  }
-
-  const htmlElem_modal = document.getElementById(str_uniqueIDForModalDiv);
-  htmlElem_modal.innerHTML = str_innerHTML;
-  const htmlElem_pre = document.evaluate('div[position()=1]/div[position()=1]/div[position()=1]/pre', htmlElem_modal, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null).iterateNext();
+  HtmlElem_modalDiv.innerHTML = str_innerHTML;
+  const htmlElem_pre = document.evaluate('div[position()=1]/div[position()=1]/div[position()=1]/pre', HtmlElem_modalDiv, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null).iterateNext();
   htmlElem_pre.innerHTML = str_ans;
   
   const int_trainsitionMS = 200; /* transition time [ms] */
-  htmlElem_modal.style.transition = 'opacity ' + int_trainsitionMS + 'ms';
+  HtmlElem_modalDiv.style.transition = 'opacity ' + int_trainsitionMS + 'ms';
   
-  setTimeout(function(){htmlElem_modal.style.display = "block"}, 1);
-  setTimeout(function(){htmlElem_modal.style.opacity = 1}, int_trainsitionMS);
+  HtmlElem_modalDiv.style.display = "block";
+  HtmlElem_modalDiv.style.opacity = 1;
 
   /* --------------------------------------------------------------------------</モーダルの表示> */
 
   /* <クリップボードコピー用 Event Lisner>------------------------------------------------------ */
-  const htmlElem_okButton = document.evaluate('div[position()=1]/div[position()=1]/div[position()=1]/h2/button', htmlElem_modal, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null).iterateNext();
+  const htmlElem_okButton = document.evaluate('div[position()=1]/div[position()=1]/div[position()=1]/h2/button', HtmlElem_modalDiv, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null).iterateNext();
   htmlElem_okButton.addEventListener('click', (obj_event) => {
     var range = document.createRange(); 
     range.selectNodeContents(htmlElem_pre); 
@@ -148,13 +145,13 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
   let modalClose = document.querySelectorAll('.js-modal-close');
     for (let i = 0; i < modalClose.length; i++){
     modalClose[i].addEventListener('click', (e) => {
-      setTimeout(function(){htmlElem_modal.style.opacity = 0}, 1);
-      setTimeout(function(){htmlElem_modal.style.display = "none"}, int_trainsitionMS);
+      HtmlElem_modalDiv.style.opacity = 0;
+      HtmlElem_modalDiv.emove();
       e.stopPropagation();
     });
   }
   /* モーダル外もしくは「OK」ボタンのクリック以外は、'click' イベントを上位の要素に伝搬させない */
-  const htmlElem_ContainerDiv = document.evaluate('div[position()=1]/div[position()=1]', htmlElem_modal, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null).iterateNext();
+  const htmlElem_ContainerDiv = document.evaluate('div[position()=1]/div[position()=1]', HtmlElem_modalDiv, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null).iterateNext();
   htmlElem_ContainerDiv.addEventListener('click', (e) => {
     e.stopPropagation();
   });
