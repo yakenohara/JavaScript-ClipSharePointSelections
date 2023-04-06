@@ -114,11 +114,11 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
   const htmlElem_pre = document.evaluate('div[position()=1]/div[position()=1]/div[position()=1]/pre', HtmlElem_modalDiv, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null).iterateNext();
   htmlElem_pre.innerHTML = str_ans;
   
-  const int_trainsitionMS = 200; /* transition time [ms] */
+  const int_trainsitionMS = 100; /* transition time [ms] */
   HtmlElem_modalDiv.style.transition = 'opacity ' + int_trainsitionMS + 'ms';
   
   HtmlElem_modalDiv.style.display = "block";
-  HtmlElem_modalDiv.style.opacity = 1;
+  setTimeout(function(){HtmlElem_modalDiv.style.opacity = 1;}, int_trainsitionMS);
 
   /* --------------------------------------------------------------------------</モーダルの表示> */
 
@@ -146,7 +146,7 @@ Bookmarklet that retrieves the file path on SharePoint and displays the `[anchor
     for (let i = 0; i < modalClose.length; i++){
     modalClose[i].addEventListener('click', (e) => {
       HtmlElem_modalDiv.style.opacity = 0;
-      HtmlElem_modalDiv.emove();
+      setTimeout(function(){HtmlElem_modalDiv.remove();}, int_trainsitionMS);
       e.stopPropagation();
     });
   }
